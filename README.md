@@ -128,6 +128,21 @@ curl http://localhost:5000/health-check
 }
 ```
 
+### PostgreSQL Extensions Test
+
+Test the PostgreSQL extensions (uuid-ossp and pgcrypto):
+
+```bash
+npm run test:db
+```
+
+This will verify:
+- Database connectivity
+- UUID v4 generation
+- Password hashing with bcrypt
+- Password verification
+- All installed extensions
+
 ### Code Quality
 
 **Run linter:**
@@ -181,6 +196,14 @@ todo-backend/
 │   │   └── health.js     # Health check route
 │   ├── app.js            # Express app configuration
 │   └── server.js         # Server entry point
+├── scripts/
+│   ├── install-postgres.sh     # Automated PostgreSQL installation
+│   ├── configure-auth.sh       # Configure pg_hba.conf for authentication
+│   ├── setup-database.sql      # Database and extensions setup
+│   ├── verify-setup.sql        # SQL verification script
+│   └── test-extensions.js      # Node.js extension test script
+├── docs/
+│   └── POSTGRESQL_SETUP.md     # Detailed PostgreSQL setup guide
 ├── .env.example          # Environment variables template
 ├── eslint.config.js      # ESLint configuration
 ├── .prettierrc           # Prettier configuration
@@ -196,6 +219,7 @@ todo-backend/
 - `npm run lint` - Run ESLint to check code quality
 - `npm run lint:fix` - Automatically fix linting issues
 - `npm run format` - Format code with Prettier
+- `npm run test:db` - Test PostgreSQL extensions (uuid-ossp, pgcrypto)
 
 ## 🛡️ Error Handling
 
