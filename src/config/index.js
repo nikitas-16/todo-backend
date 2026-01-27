@@ -3,16 +3,12 @@ import dotenv from 'dotenv';
 // Load environment variables from .env file
 dotenv.config();
 
-const requiredEnvVars = [
-  'DB_HOST',
-  'DB_USER',
-  'DB_PASSWORD',
-  'DB_NAME',
-  'PORT',
-];
+const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_NAME', 'PORT'];
 
 // Validate that all required environment variables are present
-const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
+const missingEnvVars = requiredEnvVars.filter(
+  (envVar) => process.env[envVar] === undefined
+);
 
 if (missingEnvVars.length > 0) {
   console.error(
