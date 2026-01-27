@@ -57,12 +57,29 @@ DB_NAME=todo_db
 
 ### 4. Set up PostgreSQL database
 
-Make sure PostgreSQL is running locally and create the database:
+**Option 1: Automated Setup (Recommended)**
+
+Run our automated installation script:
 
 ```bash
-psql -U postgres
-CREATE DATABASE todo_db;
-\q
+chmod +x scripts/install-postgres.sh
+./scripts/install-postgres.sh
+```
+
+This will install PostgreSQL 14+, create the database, enable required extensions (`uuid-ossp` and `pgcrypto`), and set up the application user.
+
+**Option 2: Manual Setup**
+
+See the [PostgreSQL Setup Guide](docs/POSTGRESQL_SETUP.md) for detailed installation and configuration instructions.
+
+**Quick Manual Setup:**
+
+```bash
+# Run the setup script as postgres user
+sudo -u postgres psql -f scripts/setup-database.sql
+
+# Verify the setup
+PGPASSWORD=todo_secure_password psql -U todo_user -d todo_db -f scripts/verify-setup.sql
 ```
 
 ### 5. Run the application
