@@ -8,9 +8,11 @@ A Node.js and PostgreSQL backend for a Todo application with strict code consist
 - PostgreSQL database with connection pooling
 - Centralized configuration management
 - Health check endpoint with database connectivity verification
-- Strict code consistency with ESLint and Prettier
+- Strict code consistency with ESLint (Airbnb-style) and Prettier
+- Pre-commit and pre-push hooks with Husky to enforce code quality
 - Hot-reloading development environment with nodemon
 - Graceful shutdown handling
+- CORS support for cross-origin requests
 
 ## 📋 Prerequisites
 
@@ -127,6 +129,27 @@ npm run lint:fix
 
 ```bash
 npm run format
+```
+
+### Git Hooks (Husky)
+
+This project uses Husky to enforce code quality standards before commits and pushes:
+
+**Pre-commit hook:**
+- Automatically runs ESLint and Prettier on staged files
+- Fixes formatting issues automatically
+- Prevents commits if linting errors are found
+
+**Pre-push hook:**
+- Runs full linting check on all source files
+- Ensures all code follows Airbnb-style ESLint rules
+- Prevents pushes if any linting errors exist
+
+The hooks are automatically installed when you run `npm install`. If you need to bypass them (not recommended), you can use:
+
+```bash
+git commit --no-verify  # Skip pre-commit hook
+git push --no-verify    # Skip pre-push hook
 ```
 
 ## 📁 Project Structure
