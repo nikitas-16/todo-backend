@@ -4,7 +4,7 @@ import pool from '../config/db.js';
 const router = express.Router();
 
 /**
- * GET /health
+ * GET /health-check
  * Health check endpoint that verifies server and database connectivity
  * Returns 200 if healthy, 503 if database is unreachable
  */

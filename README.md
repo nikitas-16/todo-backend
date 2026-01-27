@@ -88,7 +88,7 @@ The server will start on `http://localhost:5000` (or the port specified in your 
 Test the health endpoint to verify server and database connectivity:
 
 ```bash
-curl http://localhost:5000/health
+curl http://localhost:5000/health-check
 ```
 
 **Expected Response (Success - 200 OK):**
