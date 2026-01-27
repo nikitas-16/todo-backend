@@ -142,7 +142,7 @@ todo-backend/
 │   ├── app.js            # Express app configuration
 │   └── server.js         # Server entry point
 ├── .env.example          # Environment variables template
-├── .eslintrc.json        # ESLint configuration
+├── eslint.config.js      # ESLint configuration
 ├── .prettierrc           # Prettier configuration
 ├── .editorconfig         # EditorConfig settings
 ├── .gitignore           # Git ignore rules
