@@ -18,6 +18,8 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- 3. Create application user (if it doesn't exist)
+-- SECURITY NOTE: This password is for development only. 
+-- For production, use: ALTER USER todo_user WITH PASSWORD 'your_secure_password';
 DO
 $$
 BEGIN

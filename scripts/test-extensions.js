@@ -56,7 +56,8 @@ async function testExtensions() {
     const passwordTest = await pool.query(`
       SELECT crypt('my_secure_password', gen_salt('bf')) AS hashed_password
     `);
-    console.log(`✅ Password hashed successfully: ${passwordTest.rows[0].hashed_password.substring(0, 20)}...`);
+    const hashedLength = passwordTest.rows[0].hashed_password.length;
+    console.log(`✅ Password hashed successfully (hash length: ${hashedLength} characters)`);
     console.log('');
 
     // Test 5: Password Verification

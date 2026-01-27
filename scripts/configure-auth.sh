@@ -37,7 +37,7 @@ echo ""
 
 # Update pg_hba.conf to use md5 authentication for local connections
 echo "Updating pg_hba.conf to allow password authentication..."
-sudo sed -i 's/^local   all             all                                     peer$/local   all             all                                     md5/' "$PG_HBA_CONF"
+sudo sed -i -E 's/^local[[:space:]]+all[[:space:]]+all[[:space:]]+peer$/local   all             all                                     md5/' "$PG_HBA_CONF"
 
 echo "✓ Configuration updated"
 echo ""

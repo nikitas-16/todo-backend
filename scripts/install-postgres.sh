@@ -28,7 +28,7 @@ echo ""
 # Function to check if PostgreSQL is installed
 check_postgres_installed() {
     if command -v psql &> /dev/null; then
-        POSTGRES_VERSION=$(psql --version | grep -oP '\d+' | head -1)
+        POSTGRES_VERSION=$(psql --version | sed -E 's/^[^0-9]*([0-9]+).*/\1/')
         echo "✓ PostgreSQL is already installed (version $POSTGRES_VERSION)"
         return 0
     else
@@ -46,10 +46,10 @@ install_postgres_linux() {
     
     # Install prerequisites
     sudo apt-get update
-    sudo apt-get install -y wget ca-certificates
+    sudo apt-get install -y wget ca-certificates gnupg
     
-    # Import the repository signing key
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+    # Import the repository signing key (using modern method)
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
     
     # Add PostgreSQL repository
     sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
