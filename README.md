@@ -44,7 +44,7 @@ cp .env.example .env
 Edit the `.env` file with your PostgreSQL configuration:
 
 ```env
-PORT=3000
+PORT=5000
 
 DB_HOST=localhost
 DB_PORT=5432
@@ -77,7 +77,7 @@ npm run dev
 npm start
 ```
 
-The server will start on `http://localhost:3000` (or the port specified in your `.env` file).
+The server will start on `http://localhost:5000` (or the port specified in your `.env` file).
 
 ## 🧪 Testing
 
@@ -86,7 +86,7 @@ The server will start on `http://localhost:3000` (or the port specified in your 
 Test the health endpoint to verify server and database connectivity:
 
 ```bash
-curl http://localhost:3000/health
+curl http://localhost:5000/health
 ```
 
 **Expected Response (Success - 200 OK):**
