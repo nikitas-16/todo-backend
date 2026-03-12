@@ -11,6 +11,8 @@ servers:
 tags:
   - name: Health
     description: Health check endpoints
+  - name: Todos
+    description: Todo CRUD operations
 
 paths:
   /health:
@@ -54,3 +56,229 @@ paths:
                     type: string
                     format: date-time
                     example: '2026-03-12T10:00:00.000Z'
+
+  /todos:
+    post:
+      tags:
+        - Todos
+      summary: Create a new todo
+      description: Creates a new todo item. Title is required and must not be empty.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTodoRequest'
+      responses:
+        '201':
+          description: Todo created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+    get:
+      tags:
+        - Todos
+      summary: Get all todos
+      description: Returns an array of all todo items, ordered by creation date (newest first). Supports optional pagination.
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+          description: Maximum number of todos to return
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+          description: Number of todos to skip
+      responses:
+        '200':
+          description: List of todos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+
+  /todos/{id}:
+    get:
+      tags:
+        - Todos
+      summary: Get a todo by ID
+      description: Returns a single todo item by its UUID.
+      parameters:
+        - $ref: '#/components/parameters/TodoId'
+      responses:
+        '200':
+          description: Todo found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+        '400':
+          description: Invalid UUID format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Todo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    patch:
+      tags:
+        - Todos
+      summary: Update a todo
+      description: Partially updates a todo item. At least one field (title, description, or is_completed) must be provided. The updated_at timestamp is automatically refreshed.
+      parameters:
+        - $ref: '#/components/parameters/TodoId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTodoRequest'
+      responses:
+        '200':
+          description: Todo updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+        '400':
+          description: Validation error or invalid UUID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: Todo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - Todos
+      summary: Delete a todo
+      description: Removes a todo item by its UUID. Returns 204 on success or 404 if the todo does not exist.
+      parameters:
+        - $ref: '#/components/parameters/TodoId'
+      responses:
+        '204':
+          description: Todo deleted successfully
+        '400':
+          description: Invalid UUID format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Todo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  parameters:
+    TodoId:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: The UUID of the todo
+
+  schemas:
+    Todo:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+        title:
+          type: string
+          example: 'Buy groceries'
+        description:
+          type: string
+          nullable: true
+          example: 'Milk, eggs, bread'
+        is_completed:
+          type: boolean
+          example: false
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    CreateTodoRequest:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'Buy groceries'
+        description:
+          type: string
+          nullable: true
+          example: 'Milk, eggs, bread'
+
+    UpdateTodoRequest:
+      type: object
+      minProperties: 1
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'Buy groceries and cook dinner'
+        description:
+          type: string
+          nullable: true
+          example: 'Updated description'
+        is_completed:
+          type: boolean
+          example: true
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: 'Todo not found'
+
+    ValidationError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: 'Validation failed'
+        details:
+          type: array
+          items:
+            type: string
+          example:
+            - '"title" is not allowed to be empty'
