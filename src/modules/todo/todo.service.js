@@ -68,7 +68,7 @@ const updateTodo = async (id, data) => {
   if (data.description !== undefined) {
     fields.push(`description = $${paramIndex}`);
     paramIndex += 1;
-    values.push(data.description);
+    values.push(data.description ?? null);
   }
   if (data.is_completed !== undefined) {
     fields.push(`is_completed = $${paramIndex}`);
