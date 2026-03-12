@@ -6,6 +6,7 @@ import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yaml';
 import healthRouter from './routes/health.js';
+import todoRouter from './modules/todo/todo.routes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const swaggerDoc = YAML.parse(
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/health', healthRouter);
+app.use('/todos', todoRouter);
 
 // API docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));

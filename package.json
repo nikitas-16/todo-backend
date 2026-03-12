@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "backend for todo app",
   "main": "src/server.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
@@ -10,7 +13,8 @@
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint src/**/*.js --fix",
     "format": "prettier --write \"src/**/*.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:db": "node scripts/test-extensions.js",
     "prepare": "husky"
   },
@@ -33,6 +37,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "joi": "^18.0.2",
     "pg": "^8.17.2",
     "swagger-ui-express": "^5.0.1",
     "yaml": "^2.8.2"
@@ -46,6 +51,8 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "nodemon": "^3.1.11",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.1",
+    "supertest": "^7.2.2",
+    "vitest": "^4.0.18"
   }
 }

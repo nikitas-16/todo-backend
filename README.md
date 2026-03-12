@@ -16,7 +16,7 @@ A Node.js and PostgreSQL backend for a Todo application with strict code consist
 
 ## 📋 Prerequisites
 
-- **Node.js** 18+ 
+- **Node.js** 20+ 
 - **PostgreSQL** 14+ (running locally)
 - **npm** or **yarn**
 
