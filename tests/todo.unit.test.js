@@ -45,6 +45,38 @@ describe('Todo API - Validation (Unit)', () => {
     });
   });
 
+  describe('GET /todos query validation', () => {
+    it('should return 400 when limit is not a number', async () => {
+      const res = await request(app).get('/todos?limit=abc');
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Validation failed');
+    });
+
+    it('should return 400 when limit is negative', async () => {
+      const res = await request(app).get('/todos?limit=-1');
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Validation failed');
+    });
+
+    it('should return 400 when limit is zero', async () => {
+      const res = await request(app).get('/todos?limit=0');
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Validation failed');
+    });
+
+    it('should return 400 when offset is not a number', async () => {
+      const res = await request(app).get('/todos?offset=abc');
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Validation failed');
+    });
+
+    it('should return 400 when offset is negative', async () => {
+      const res = await request(app).get('/todos?offset=-1');
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Validation failed');
+    });
+  });
+
   describe('PATCH /todos/:id validation', () => {
     it('should return 400 when no fields provided', async () => {
       const uuid = '00000000-0000-0000-0000-000000000000';
