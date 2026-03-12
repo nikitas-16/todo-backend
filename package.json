@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "backend for todo app",
   "main": "src/server.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "type": "module",
   "scripts": {
     "start": "node src/server.js",

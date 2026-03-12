@@ -1,5 +1,5 @@
 /**
- * Express middleware that validates the :id route parameter is a valid UUID v4.
+ * Express middleware that validates the :id route parameter is a valid UUID.
  * Returns 400 if the ID format is invalid, before any database query.
  */
 const UUID_REGEX =

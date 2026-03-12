@@ -10,7 +10,7 @@ const createTodo = async ({ title, description }) => {
     `INSERT INTO todos (title, description)
      VALUES ($1, $2)
      RETURNING *`,
-    [title, description || null]
+    [title, description ?? null]
   );
   return rows[0];
 };
@@ -61,15 +61,18 @@ const updateTodo = async (id, data) => {
   let paramIndex = 1;
 
   if (data.title !== undefined) {
-    fields.push(`title = $${paramIndex++}`);
+    fields.push(`title = $${paramIndex}`);
+    paramIndex += 1;
     values.push(data.title);
   }
   if (data.description !== undefined) {
-    fields.push(`description = $${paramIndex++}`);
+    fields.push(`description = $${paramIndex}`);
+    paramIndex += 1;
     values.push(data.description);
   }
   if (data.is_completed !== undefined) {
-    fields.push(`is_completed = $${paramIndex++}`);
+    fields.push(`is_completed = $${paramIndex}`);
+    paramIndex += 1;
     values.push(data.is_completed);
   }
 
