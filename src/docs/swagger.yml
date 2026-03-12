@@ -1,0 +1,56 @@
+openapi: 3.0.3
+info:
+  title: Todo Backend API
+  description: A RESTful API for managing todos.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+
+tags:
+  - name: Health
+    description: Health check endpoints
+
+paths:
+  /health:
+    get:
+      tags:
+        - Health
+      summary: Health check
+      description: Verifies server and database connectivity.
+      responses:
+        '200':
+          description: Server and database are healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: UP
+                  database:
+                    type: string
+                    example: connected
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: '2026-03-12T10:00:00.000Z'
+        '503':
+          description: Database is unreachable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: DOWN
+                  database:
+                    type: string
+                    example: disconnected
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: '2026-03-12T10:00:00.000Z'
